@@ -1,0 +1,4 @@
+# Release/source archives should contain only the distributable addon payload.
+* export-ignore
+addons -export-ignore
+addons/** -export-ignore

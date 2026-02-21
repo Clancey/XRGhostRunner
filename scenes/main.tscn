@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_fu6ri"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_fu6ri")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Info" type="Label" parent="UI"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 1220.0
+offset_bottom = 260.0
+text = "XRGhostRunner (Godot 4.6)\n\nRecord (auto timestamp name):\n  godot --path . --xrg-record\n\nRecord (explicit path):\n  godot --path . --xrg-record user://captures/run_01.xrtape\n\nReplay:\n  godot --path . --xrg-replay user://captures/run_01.xrtape --xrg-auto-quit\n\nStorage:\n  run_01.xrtape\n  run_01.xrtape.events\n  run_01.xrtape.frames\n\nWrites and replay prefetch run on background threads.\nAdaptive frame sampling engages under sustained IO pressure.\n\nAutoload singleton: XRInputTape (res://addons/xr_ghost_runner/xr_input_tape.gd)."
+autowrap_mode = 3

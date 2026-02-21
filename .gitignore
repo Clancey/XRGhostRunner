@@ -1,0 +1,10 @@
+# Godot generated/imported data
+.import/
+.godot/
+*.import
+
+# macOS metadata
+.DS_Store
+
+# Local packaging output
+dist/
