@@ -478,6 +478,16 @@ func _build_stream_paths(path: String) -> Dictionary:
 		"frames": "%s.frames" % path,
 	}
 
+func _resolve_replay_sidecar_path(preferred_path: String, fallback_path: String) -> String:
+	if preferred_path.is_empty():
+		return fallback_path
+	if FileAccess.file_exists(preferred_path):
+		return preferred_path
+	if FileAccess.file_exists(fallback_path):
+		push_warning("[XRGhostRunner] Replay sidecar not found at metadata path '%s'. Falling back to '%s'." % [preferred_path, fallback_path])
+		return fallback_path
+	return preferred_path
+
 func _open_record_stream(path: String) -> bool:
 	_close_record_stream_files()
 	_record_paths = _build_stream_paths(path)
@@ -692,10 +702,12 @@ func _open_stream_replay(path: String) -> bool:
 	var files_variant = header.get("files", {})
 	if typeof(files_variant) == TYPE_DICTIONARY:
 		var files: Dictionary = files_variant
+		var fallback_events := String(_replay_paths.get("events", ""))
+		var fallback_frames := String(_replay_paths.get("frames", ""))
 		if files.has("events"):
-			_replay_paths["events"] = String(files.get("events", _replay_paths.get("events", "")))
+			_replay_paths["events"] = _resolve_replay_sidecar_path(String(files.get("events", "")), fallback_events)
 		if files.has("frames"):
-			_replay_paths["frames"] = String(files.get("frames", _replay_paths.get("frames", "")))
+			_replay_paths["frames"] = _resolve_replay_sidecar_path(String(files.get("frames", "")), fallback_frames)
 
 	_apply_stream_meta(header)
 	_replay_reader_event_queue.clear()

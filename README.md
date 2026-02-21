@@ -70,6 +70,30 @@ Useful options:
 - `--xrg-pose-name NAME` add extra pose probe name(s)
 - `--xrg-input-name NAME` add extra controller input probe name(s)
 
+## Smoke tests
+
+Run from project root:
+
+```bash
+# 1) Parse check (no run)
+godot --headless --path . -s res://addons/xr_ghost_runner/xr_input_tape.gd --check-only
+
+# 2) Record smoke capture
+godot --headless --path . --quit --xrg-record user://captures/smoke.xrtape
+
+# 3) Replay smoke capture
+godot --headless --path . --xrg-replay user://captures/smoke.xrtape --xrg-auto-quit
+
+# 4) Replay fixture capture in repo (if present)
+godot --headless --path . --xrg-replay res://test_data/run_20260220_214516_579040.xrtape --xrg-auto-quit
+```
+
+Expected success signals in logs:
+
+- `Loaded stream tape: ...`
+- `Replaying XR input from ...`
+- `Replay finished (N events, M frames).`
+
 ## Output location (`user://`)
 
 - Default recordings are written under `user://captures/`.

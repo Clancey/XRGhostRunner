@@ -155,7 +155,10 @@ Replay loads `*.xrtape` first and verifies:
 Then sidecar paths are resolved from:
 
 - `header["files"]["events"]` and `header["files"]["frames"]` when present
-- otherwise defaulting to `path + ".events"` and `path + ".frames"`
+- if those metadata paths do not exist locally, replay falls back to sidecars next to the tape:
+  - `path + ".events"`
+  - `path + ".frames"`
+- if metadata `files` is absent, defaults are `path + ".events"` and `path + ".frames"`
 
 ## Replay compatibility policy
 
